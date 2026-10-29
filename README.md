@@ -1,4 +1,4 @@
- AI Code Reviewer Microservice
+🚀 AI Code Reviewer Microservice
 An AI-powered microservice that analyzes code snippets, identifies bugs, security vulnerabilities, and performance bottlenecks, and provides structured, human-like feedback.
 
 Built with FastAPI and powered by Google Gemini API (using the OpenAI SDK compatibility layer).
@@ -57,34 +57,30 @@ Copy the key. (Note: Never share this key or commit it to GitHub).
 
 💻 Method A: Running Locally (Without Docker)
 1. Clone the Repository
-
-bash
 git clone https://github.com/hassanulamin121/ai_code_reviewer.git
 cd ai_code_reviewer
+.
 2. Create and Activate Virtual Environment
 Windows:
 
-bash
 python -m venv venv
 venv\Scripts\activate
+.
 macOS/Linux:
-
-bash
 python3 -m venv venv
 source venv/bin/activate
+.
 3. Install Dependencies
-
-bash
 pip install -r requirements.txt
+.
 4. Setup Environment Variables
 Create a .env file in the root directory and add your API key:
-
-env
 GEMINI_API_KEY="your_actual_api_key_here"
+.
 5. Run the Application
-
-bash
 uvicorn main:app --reload
+.
+
 🐳 Method B: Running with Docker (Recommended)
 Ensure Docker Desktop is running in the background.
 
@@ -134,3 +130,4 @@ Ensure .env is listed in your .gitignore file.
 If you accidentally commit a key, revoke it immediately via Google AI Studio.
 
 Built with ❤️ for the developer community.
+
