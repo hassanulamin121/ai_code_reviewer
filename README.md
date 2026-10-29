@@ -53,3 +53,88 @@ Open your terminal and run:
 ```bash
 git clone https://github.com/hassanulamin121/ai_code_reviewer.git
 cd ai_code_reviewer
+
+Step 2: Get your Gemini API Key
+Go to Google AI Studio (https://aistudio.google.com/).
+
+Click on "Get API Key" and create a new API key.
+
+Copy the key. (Never share this key publicly or commit it to GitHub).
+
+Step 3: Configure Environment Variables
+Create a file named .env in the root directory of the project. Open it and paste your API key:
+
+env
+GEMINI_API_KEY="your_actual_api_key_here"
+
+Step 4: Run Locally (Without Docker)
+If you want to run the project directly on your machine:
+
+Create and Activate Virtual Environment:
+Windows:
+
+bash
+python -m venv venv
+venv\Scripts\activate
+
+macOS/Linux:
+
+bash
+python3 -m venv venv
+source venv/bin/activate
+
+Install Dependencies:
+
+bash
+pip install -r requirements.txt
+Run the Application:
+
+bash
+uvicorn main:app --reload
+
+Step 5: Run with Docker (Alternative Method)
+If you prefer using Docker, ensure Docker Desktop is running in the background.
+
+Build the Docker Image:
+
+bash
+docker build -t ai-code-reviewer .
+
+Run the Docker Container:
+Pass the .env file securely to the container and map the ports:
+
+bash
+docker run -d -p 8000:8000 --env-file .env --name code-reviewer-container ai-code-reviewer
+
+🚀 How to Use / Test the API
+Once the application is running (either via Local or Docker), follow these steps:
+
+Open your browser and go to: http://127.0.0.1:8000/docs
+
+You will see the FastAPI Swagger UI.
+
+Expand the POST /analyze_code_review_post endpoint.
+
+Click on the "Try it out" button.
+
+Paste your code snippet in the JSON payload box. Example:
+
+json
+{
+  "code": "def add(a, b):\n    return a + b"
+}
+Click "Execute" and scroll down to see the AI's response!
+
+🛡️ Security Best Practices
+Never hardcode your API keys directly in the Python code.
+
+Ensure .env is always listed in your .gitignore file.
+
+If you accidentally commit an API key to GitHub, revoke it immediately via Google AI Studio and generate a new one.
+
+Built with ❤️ for the developer community.
+
+
+
+
+
