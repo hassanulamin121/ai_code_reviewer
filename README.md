@@ -1,77 +1,136 @@
-🤖 AI Code Reviewer
+ AI Code Reviewer Microservice
+An AI-powered microservice that analyzes code snippets, identifies bugs, security vulnerabilities, and performance bottlenecks, and provides structured, human-like feedback.
 
-Welcome to AI Code Reviewer—an intelligent, automated code review assistant designed to act as your virtual senior software engineer. Built with a robust Python backend and powered by advanced language models, this tool scans your code, catches hidden bugs, enforces best practices, and delivers constructive, human-like feedback before your code ever hits production.
+Built with FastAPI and powered by Google Gemini API (using the OpenAI SDK compatibility layer).
 
-✨ Why This Exists
+✨ Key Features
+🧠 AI-Powered Analysis: Goes beyond basic syntax checking. It analyzes architecture, security, edge cases, and maintainability.
 
-Code reviews are vital for maintaining software quality, but waiting on human reviews can often slow down development speed. AI Code Reviewer bridges that gap by offering instant, context-aware, and actionable code critiques. It looks beyond simple syntax errors to evaluate architecture, security vulnerabilities, edge cases, and code maintainability with the clarity and empathy of a seasoned tech lead.
+📑 Categorized Feedback: The AI structures its response into Critical Bugs, Security Warnings, Performance Optimizations, and Style suggestions.
 
-🚀 Core Features
+⚡ Asynchronous Architecture: Built with AsyncOpenAI and FastAPI for non-blocking, high-performance I/O operations.
 
-Deep Semantic & Static Analysis: Goes beyond basic linters to understand the true intent and logic of your code changes.
+🔒 Secure Key Management: API keys are strictly isolated using .env files and are never hardcoded.
 
-Prioritized Feedback: Categorizes suggestions into critical bugs, performance optimizations, security warnings, and style improvements.
+📖 Auto-Generated Docs: Comes with built-in Swagger UI for easy testing and interaction.
 
-Constructive, Human-Like Tone: Delivers feedback with clear explanations of the why behind every recommendation, helping developers learn and grow.
-
-Secure & Configurable: Strict environment isolation via .env to protect your sensitive credentials.
+🐳 Dockerized: Fully containerized for seamless deployment across any environment.
 
 🛠️ Tech Stack
+Backend Framework: FastAPI
 
-Language: Python 3.12+
+AI Engine: Google Gemini API (via OpenAI Python SDK)
 
-AI Engine: Google Gemini API
+Data Validation: Pydantic
 
-Validation & Config: Pydantic, Python-Dotenv
+Environment Management: python-dotenv
 
-⚙️ Getting Started Locally
+Deployment: Docker & Uvicorn
 
-Follow these quick steps to get the project up and running on your machine:
+🏗️ Architecture / Flow
+Request: User sends a code snippet via a POST request.
+
+Validation: Pydantic validates the incoming payload (ensuring the code field exists).
+
+AI Processing: The FastAPI endpoint uses AsyncOpenAI (configured with Gemini's base URL) to send the code and a custom prompt to the Gemini model.
+
+Response: The AI returns a structured review, which is parsed and sent back to the user.
+
+⚙️ Step-by-Step Setup Guide
+Follow these instructions to get the project running on your local machine.
+
+Prerequisites
+Make sure you have installed:
+
+Python 3.12+
+
+Git
+
+Docker Desktop (Optional, for Docker setup)
+
+🔑 Step 1: Get your Gemini API Key
+Go to Google AI Studio.
+
+Click on "Get API Key" and create a new API key.
+
+Copy the key. (Note: Never share this key or commit it to GitHub).
+
+💻 Method A: Running Locally (Without Docker)
+1. Clone the Repository
+
+bash
+git clone https://github.com/hassanulamin121/ai_code_reviewer.git
+cd ai_code_reviewer
+2. Create and Activate Virtual Environment
+Windows:
+
+bash
+python -m venv venv
+venv\Scripts\activate
+macOS/Linux:
+
+bash
+python3 -m venv venv
+source venv/bin/activate
+3. Install Dependencies
+
+bash
+pip install -r requirements.txt
+4. Setup Environment Variables
+Create a .env file in the root directory and add your API key:
+
+env
+GEMINI_API_KEY="your_actual_api_key_here"
+5. Run the Application
+
+bash
+uvicorn main:app --reload
+🐳 Method B: Running with Docker (Recommended)
+Ensure Docker Desktop is running in the background.
 
 1. Clone the Repository
 
-git clone https://github.com/hassanulamin121/ai-code-reviewer.git
-cd ai-code-reviewer
+bash
+git clone https://github.com/hassanulamin121/ai_code_reviewer.git
+cd ai_code_reviewer
+2. Setup Environment Variables
+Create a .env file in the root directory:
 
-
-2. Set Up a Virtual Environment
-
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-
-3. Install Dependencies
-
-pip install -r requirements.txt
-
-
-4. Configure Environment Variables
-
-Create a .env file in the root directory of the project and add your API key:
-
+env
 GEMINI_API_KEY="your_actual_api_key_here"
+3. Build the Docker Image
 
+bash
+docker build -t ai-code-reviewer .
+4. Run the Docker Container
+Pass the .env file securely to the container and map the ports:
 
-(Note: Never push your .env file to version control!)
+bash
+docker run -d -p 8000:8000 --env-file .env --name code-reviewer-container ai-code-reviewer
+🚀 How to Use
+Once the application is running (either via Local or Docker):
 
-5. Run the Application
+Open your browser and go to: http://127.0.0.1:8000/docs
 
-python main.py
+You will see the FastAPI Swagger UI.
 
+Expand the POST /analyze_code_review_post endpoint.
 
-🗺️ Roadmap & Future Enhancements
+Click "Try it out".
 
-[ ] GitHub Webhook Integration: Automatically trigger reviews on pull requests and commits.
+Paste your code snippet in the JSON payload:
 
-[ ] Custom Rules Engine: Allow developers to define custom linting/review rules via a .yaml config.
+json
+{
+  "code": "def add(a, b):\n    return a + b"
+}
+Click "Execute" and scroll down to see the AI's response!
 
-[ ] Interactive CLI Dashboard: Rich terminal UI to visualize review metrics and status.
+🛡️ Security Note
+Never hardcode your API keys in the code.
 
-🤝 Contributing
+Ensure .env is listed in your .gitignore file.
 
-Contributions, ideas, and bug reports are always welcome! Feel free to fork the repository, open an issue, or submit a pull request.
+If you accidentally commit a key, revoke it immediately via Google AI Studio.
 
-Crafted with 💡 and clean code principles.
+Built with ❤️ for the developer community.
